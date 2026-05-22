@@ -1,0 +1,172 @@
+{
+  "name": "transferir_suporte",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "6e12e408-2eb1-4437-aefc-09e37569f823",
+      "name": "Replace me with your logic",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1376,
+        288
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "ticket"
+            }
+          ]
+        }
+      },
+      "id": "b7f74cc0-3fb9-4351-8c88-9355951ee548",
+      "typeVersion": 1.1,
+      "name": "first",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        400,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.toop.one/v2/api/external/72fe7498-6eca-47e7-b1ef-497209ed06e9/updateticketinfo",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \n    \"ticketId\": {{ $json.ticket }},\n    \"userId\": 58,\n    \"status\": \"pending\",\n    \"queueId\": 6\n\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        640,
+        288
+      ],
+      "id": "ea903829-a1c7-4e11-ab12-e74c4d2c27fc",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Fh1EeyH6sWNFjd0L",
+          "name": "Toop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.toop.one/v2/api/external/72fe7498-6eca-47e7-b1ef-497209ed06e9/updateTicketChannel",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"ticketId\": {{ $json.id }},\n    \"whatsappId\": 14,\n    \"channel\": \"evo\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        880,
+        288
+      ],
+      "id": "f7fdbc6c-61f7-461a-a787-4e726aad2091",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Fh1EeyH6sWNFjd0L",
+          "name": "Toop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.toop.one/v2/api/external/72fe7498-6eca-47e7-b1ef-497209ed06e9/updatetag",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"ticketId\": {{ $('first').item.json.ticket }},\n  \n    \"tag\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1120,
+        288
+      ],
+      "id": "5e070656-00d3-4136-9caa-e22afba9cdd4",
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Fh1EeyH6sWNFjd0L",
+          "name": "Toop"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "first": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Replace me with your logic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "bae04e6c-832c-45f0-b795-22bb64538f2f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee5d1fcca9b2fef7d8b3fefff89181c62ca79493fafb7d98b34be2082a6353ec"
+  },
+  "id": "8gQ0N2QnhUXgeTvi",
+  "tags": []
+}
