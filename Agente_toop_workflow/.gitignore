@@ -1,0 +1,33 @@
+# Arquivos com credenciais sensíveis
+*.json
+!*.example.json
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Credenciais
+credentials/
+secrets/
+*.key
+*.pem
+
+# Logs
+logs/
+*.log
+
+# Dependências
+node_modules/
+.npm
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
